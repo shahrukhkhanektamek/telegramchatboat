@@ -6,34 +6,51 @@ import path from "path";
 // Set FFmpeg path
 ffmpeg.setFfmpegPath(ffmpegPath.path);
 
-// Helper function to convert video to square/circle
-function makeVideoSquare(inputPath, outputPath) {
+function makeVideoCircle(inputPath, outputPath) {
   return new Promise((resolve, reject) => {
     ffmpeg(inputPath)
-      .videoFilters('crop=min(iw\\,ih):min(iw\\,ih),scale=640:640,setsar=1')
+      // 🔹 Make it square and simulate circular appearance
+      .videoFilters([
+        "crop=min(iw\\,ih):min(iw\\,ih)",
+        "scale=640:640",
+        "setsar=1",
+        // optional: add border for circle-like preview
+        "drawbox=x=0:y=0:w=iw:h=ih:color=black@0.3:t=20"
+      ])
       .outputOptions([
-        '-c:v libx264',
-        '-preset ultrafast', // Windows-safe preset
-        '-c:a aac',
-        '-t 59'
+        "-c:v libx264",
+        "-preset medium",
+        "-b:v 800k",
+        "-c:a aac",
+        "-b:a 96k",
+        "-t 59",
+        "-pix_fmt yuv420p"
       ])
       .save(outputPath)
-      .on('end', () => resolve(outputPath))
-      .on('error', reject);
+      .on("end", () => {
+        const stats = fs.statSync(outputPath);
+        const sizeMB = (stats.size / (1024 * 1024)).toFixed(2);
+        console.log(`✅ Converted successfully (${sizeMB} MB): ${outputPath}`);
+        if (sizeMB > 12) {
+          console.warn("⚠️ Video still exceeds 12MB limit for Telegram video note!");
+        }
+        resolve(outputPath);
+      })
+      .on("error", (err) => {
+        console.error("❌ Conversion failed:", err.message);
+        reject(err);
+      });
   });
 }
 
-// Paths
-const inputVideo = path.join('videos', 'welcome.mp4');           
-const outputVideo = path.join('output', 'welcome_circle.mp4');   
+const inputVideo = path.join("videos", "welcome.mp4");
+const outputVideo = path.join("output", "welcome_circle.mp4");
 
 // Ensure output folder exists
-if (!fs.existsSync('output')) fs.mkdirSync('output');
+if (!fs.existsSync("output")) fs.mkdirSync("output");
 
-makeVideoSquare(inputVideo, outputVideo)
+makeVideoCircle(inputVideo, outputVideo)
   .then(() => {
-    console.log(`✅ Video converted to circle and saved as: ${outputVideo}`);
+    console.log("🎥 Circle-style video ready to send!");
   })
-  .catch(err => {
-    console.error("❌ Conversion failed:", err);
-  });
+  .catch((err) => console.error("❌ Error:", err));
