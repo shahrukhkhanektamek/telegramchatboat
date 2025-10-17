@@ -25,7 +25,7 @@ bot.on("chat_join_request", async (msg) => {
       reply_markup: {
         inline_keyboard: [
           // [{ text: "🚀 Start Now", url: process.env.REGISTER_LINK }],
-          [{ text: "💬 Start Now", url: process.env.SUPPORT_LINK }],
+          [{ text: "💬 Message Now", url: process.env.SUPPORT_LINK }],
         ],
       },
     });
