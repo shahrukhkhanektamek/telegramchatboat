@@ -1,0 +1,11 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@fast-csv/format": "^5.0.5",
+    "date-fns": "^4.1.0",
+    "exceljs": "^4.4.0",
+    "googleapis": "^164.1.0",
+    "input": "^1.0.1",
+    "telegram": "^2.26.22"
+  }
+}
