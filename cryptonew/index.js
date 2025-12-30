@@ -18,7 +18,7 @@ bot.on("chat_join_request", async (msg) => {
 
   try {
     // ✅ 1. Auto-approve join request
-    await bot.approveChatJoinRequest(groupId, userId);
+    // await bot.approveChatJoinRequest(groupId, userId);
 
     // ✅ 2. Send circle video (video note) with inline buttons — no text
     await bot.sendVideoNote(userId, fs.createReadStream(process.env.VIDEO_PATH), {
