@@ -16,6 +16,8 @@ bot.on("chat_join_request", async (msg) => {
   const userId = msg.from.id;
   const groupId = msg.chat.id;
 
+  console.log("asfs");
+
   try {
     // ✅ 1. Auto-approve join request
     // await bot.approveChatJoinRequest(groupId, userId);
