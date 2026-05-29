@@ -7,9 +7,9 @@ dotenv.config();
 const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
 
 const supportLinks = [
-  "https://t.me/m/ykDJl00qMGU9",
-  "https://t.me/m/Fsnv5UEVYThl",
-  "https://t.me/m/ibLi7bOnZjk9"
+  "https://t.me/m/0jXz5ZM7NDg1", // vikram
+  "https://t.me/m/7agJ-7ZdZmQ1", // jatin
+  "https://t.me/m/ykDJl00qMGU9", // Bhati
 ];
 
 const INDEX_FILE = "currentIndex.json";
