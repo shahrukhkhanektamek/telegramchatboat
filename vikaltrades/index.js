@@ -1,15 +1,12 @@
 const TelegramBot = require("node-telegram-bot-api");
 const fs = require("fs");
 const dotenv = require("dotenv");
-
 dotenv.config();
 
 const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
 
 const supportLinks = [
-  "https://t.me/m/0jXz5ZM7NDg1", // vikram
-  "https://t.me/m/7agJ-7ZdZmQ1", // jatin
-  "https://t.me/m/ykDJl00qMGU9", // Bhati
+"https://t.me/m/Ou-vqBSINzhl",
 ];
 
 const INDEX_FILE = "currentIndex.json";
@@ -45,7 +42,7 @@ bot.on("chat_join_request", async (msg) => {
 
   try {
     // await bot.approveChatJoinRequest(groupId, userId);
-    
+
     await bot.sendVideoNote(userId, fs.createReadStream(process.env.VIDEO_PATH), {
       reply_markup: {
         inline_keyboard: [
